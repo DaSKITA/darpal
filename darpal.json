@@ -1,0 +1,367 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "https://github.com/DaSKITA/darpal",
+  "type": "object",
+  "title": "Root schema of Data Access Request Process Automation Language",
+  "description": "This schema defines the Data Access Request Process Automation Language",
+  "required": [
+    "meta",
+    "requestInterface"
+  ],
+  "additionalProperties": true,
+  "properties": {
+    "meta": {
+      "$id": "#/properties/meta",
+      "type": "object",
+      "title": "Meta",
+      "description": "Meta information for the identification and verification of the document.",
+      "examples": [
+        {
+          "_id": "f1424f86-ca0f-4f0c-9438-43cc00509931",
+          "name": "Google",
+          "created": "2022-12-08T15:53:05.929588",
+          "modified": "2022-12-08T15: 53: 05.929588",
+          "version": 1,
+          "status": "active",
+          "_hash": "d732a793562a3e5dc57645a8"
+        }
+      ],
+      "required": [
+        "_id",
+        "name",
+        "created",
+        "version",
+        "_hash"
+      ],
+      "additionalProperties": true,
+      "properties": {
+        "_id": {
+          "type": "string",
+          "title": "_id",
+          "description": "The ID follows the database-specific implementation and does not have to be set in advance; but should offer as much entropy as possible for globally unique identifiers.",
+          "examples": [
+            "f1424f86-ca0f-4f0c-9438-43cc00509931"
+          ]
+        },
+        "name": {
+          "type": "string",
+          "title": "Name",
+          "description": "Name of the data controller.",
+          "examples": [
+            "Green Company"
+          ]
+        },
+        "created": {
+          "type": "string",
+          "title": "Created",
+          "description": "Creation date of the document as an ISO-8601 time code.",
+          "pattern": "^([\\+-]?\\d{4}(?!\\d{2}\\b))((-?)((0[1-9]|1[0-2])(\\3([12]\\d|0[1-9]|3[01]))?|W([0-4]\\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\\d|[12]\\d{2}|3([0-5]\\d|6[1-6])))([T\\s]((([01]\\d|2[0-3])((:?)[0-5]\\d)?|24\\:?00)([\\.,]\\d+(?!:))?)?(\\17[0-5]\\d([\\.,]\\d+)?)?([zZ]|([\\+-])([01]\\d|2[0-3]):?([0-5]\\d)?)?)?)?$",
+          "examples": [
+            "2020-04-03T15:53:05.929588"
+          ]
+        },
+        "modified": {
+          "type": "string",
+          "title": "Modified",
+          "description": "Last modified date of the document as an ISO-8601 time code.",
+          "pattern": "^([\\+-]?\\d{4}(?!\\d{2}\\b))((-?)((0[1-9]|1[0-2])(\\3([12]\\d|0[1-9]|3[01]))?|W([0-4]\\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\\d|[12]\\d{2}|3([0-5]\\d|6[1-6])))([T\\s]((([01]\\d|2[0-3])((:?)[0-5]\\d)?|24\\:?00)([\\.,]\\d+(?!:))?)?(\\17[0-5]\\d([\\.,]\\d+)?)?([zZ]|([\\+-])([01]\\d|2[0-3]):?([0-5]\\d)?)?)?)?$",
+          "examples": [
+            "2022-12-08T15: 53: 05.929588"
+          ]
+        },
+        "version": {
+          "type": "integer",
+          "title": "Version",
+          "description": "This number serves to version documents of a controller specific process.",
+          "default": 1,
+          "minimum": 1,
+          "examples": [
+            1
+          ]
+        },
+        "_hash": {
+          "type": "string",
+          "title": "_hash",
+          "description": "The hash is based on one SHA256 calculation of the document.",
+          "minLength": 64,
+          "maxLength": 64,
+          "examples": [
+            "be81d309088dde861ab5fc4d62d4bbfe0aeef3e3baf2f5362c1086f451f0a1e7"
+          ]
+        }
+      }
+    },
+    "requestInterface": {
+      "type": "array",
+      "additionalItems": true,
+      "items": {
+        "type": "object",
+        "properties": {
+          "manual": { 
+            "type": "object",
+            "description": "Describes the manual request process",
+            "properties": {
+              "available": {
+                "type": "boolean"
+              },
+              "address": {
+                "type": "string",
+                "title": "Address",
+                "description": "Address for the postal DSAR, typically the address of a Data Protection Officer.",
+                "examples": [
+                  "Straße des 17. Juni, 10587 Berlin"
+                ]
+              },
+              "email": {
+                "type": "string",
+                "title": "Email",
+                "description": "Email address for an electronic submission of a manual access request",
+                "format": "email",
+                "examples": [
+                  "rta@mycompany.com"
+                ]
+              },
+              "phone": {
+                "type":"string",
+                "pattern": "^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$",
+                "examples": [
+                  "+49 151 1234 5678"
+                ]
+              },
+              "authentication": {
+                "type": "string",
+                "description": "Type of identification evidence that should be stated in the email to achieve faster processing of request",
+                "examples": [
+                  "ID",
+                  "Account name",
+                  "Full name and birthdate",
+                  "None"
+                ]
+              }
+            },
+            "required": [
+              "available"
+            ]
+          },
+          "webinterface": {
+            "type": "object",
+            "description": "Describes the semi-automatic request process using a webinterface",
+            "properties": {
+              "available": {
+                "type": "boolean"
+              },
+              "startUrl": {
+                "type": "string",
+                "title": "Url",
+                "description": "URL to startelement of request process",
+                "format": "uri-reference",
+                "examples": [
+                  "https://takeout.google.com/"
+                ]
+              },
+              "authentication": {
+                "type": "string",
+                "description": "Kind of authentication actions required during or before the request process is started",
+                "pattern": "^(password|cookie|email|2FA|ID)$",
+                "examples": [
+                  "password",
+                  "cookie",
+                  "email",
+                  "2FA",
+                  "ID"
+                ]
+              },
+              "workflowContainer": {
+                "type": "object",
+                "description": "The workflow for the data request process encoded in an automation engine specific format",
+                "properties": {
+                  "automationEngine": {
+                    "type": "string",
+                    "description": "Automation engine that is used to describe the specific workflow"
+                  },
+                  "workflow": {
+                    "type": "array", 
+                    "description": "Automation engine specific workflow to execute the access request with a specific set of request parameters",
+                    "items": {
+                      "type": "object",
+                      "description": "Automation engine specific workflow in the specific format. If required, it is wrapped in this object",
+                      "examples": [
+                        {
+                          "extVersion": "1.18.1",
+                          "name": "Google DSAR",
+                          "icon": "riGlobalLine",
+                          "table": [],
+                          "version": "1.18.1",
+                          "drawflow": {
+                            "edges":["..."],
+                            "nodes":["..."],
+                            "position":["..."]
+                          },
+                          "settings": {
+                            "blockDelay": 0,
+                            "debugMode": false,
+                            "defaultColumnName": "column",
+                            "executedBlockOnWeb": false,
+                            "inputAutocomplete": true,
+                            "insertDefaultColumn": false,
+                            "notification": true,
+                            "onError": "stop-workflow",
+                            "publicId": "",
+                            "restartTimes": 3,
+                            "reuseLastState": false,
+                            "saveLog": true
+                          },
+                          "globalData": "[{ \"key\": \"value\" }]",
+                          "description": "",
+                          "includedWorkflows": {}
+                        }
+                      ]
+                    }
+                  },
+                  "version": {
+                    "type": "integer"
+                  },
+                  "verified": {
+                    "type": "boolean",
+                    "default": "true"
+                  }
+                },
+                "required": [
+                  "automationEngine",
+                  "workflow"
+                ]
+              }
+            },
+            "required": [
+              "available"
+            ]
+          },
+          "api": {
+            "type": "object",
+            "description": "Describes the fully automated request process using an API",
+            "properties": {
+              "available": {
+                "type": "boolean"
+              },
+              "endpoint": {
+                "type": "string",
+                "format": "uri-reference"
+              },
+              "authentication": {
+                "type": "object",
+                "properties": {
+                  "authDescription": {
+                    "type": "string",
+                    "description": "Kind of authentication actions required during or before the request process is started",
+                    "pattern": "^(password|token|2FA)$",
+                    "examples": [
+                      "password",
+                      "2FA",
+                      "token"
+                    ]
+                  },
+                  "authProcessStage": {
+                    "type": "string",
+                    "description": "Process stage, where the authentication is required",
+                    "pattern": "^(preprocessing|requestParameter)$",
+                    "examples": [
+                      "preprocessing",
+                      "requestParameter"
+                    ]
+                  }
+                },
+                "required": [
+                  "authDescription",
+                  "authProcessStage"
+                ]
+              },
+              "apiParameters": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "key": {
+                      "type": "string"
+                    },
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "required": [
+              "available"
+            ]
+          }
+        }
+      }
+    },
+    "requestParameter": {
+      "type": "object",
+      "description": "The parameters describe options to refine the general access request",
+      "properties": {
+        "timeRange": {
+          "type": "object",
+          "description": "The time range that shall be included in the DSAR",
+          "properties": {
+            "allTime": {
+              "type": "boolean"
+            },
+            "customRange": {
+              "type": "object",
+              "description": "Describes options for a specific time range that shall be included in the DSAR",
+              "properties": {
+                "available": {
+                  "description": "Describes if a custom time range is available",
+                  "type": "boolean"
+                },
+                "range": {
+                  "type": "array",
+                  "description": "There might be multiple available time ranges.",
+                  "items": {
+                    "description": "The (time) range specifies the given options the DSAR should include. It follows the ISO 8601 for time spans.",
+                    "pattern": "^(\\d{4}(-\\d{2}(-\\d{2})?(?!:))?(T\\d{2}(:\\d{2}(:\\d{2})?(\\.\\d+)?)?)?(Z|([+,-]\\d{2}(:\\d{2})?))?)?P(([0-9]+([.,][0-9]*)?Y)?([0-9]+([.,][0-9]*)?M)?([0-9]+([.,][0-9]*)?D)?T?([0-9]+([.,][0-9]*)?H)?([0-9]+([.,][0-9]*)?M)?([0-9]+([.,][0-9]*)?S)?)|\\d{4}-?(0[1-9]|11|12)-?(?:[0-2]\\d|30|31)T((?:[0-1][0-9]|[2][0-3]):?(?:[0-5][0-9]):?(?:[0-5][0-9]|60)|2400|24:00)$",
+                  }
+                }
+              },
+              "required": [
+                "available"
+              ]
+            }
+          },
+          "required": [
+            "allTime"
+          ]
+        },
+        "mediaQuality": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "The quality of media files (image, video) included in the DSAR",
+            "pattern": "^(small|medium|high)$"
+          }
+        },
+        "dataFormat": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "File format of the retrieved data",
+            "pattern": "^(JSON|CSV|PDF|HTML|Text)$"
+          }
+        },
+        "categories":{
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "Categories of personal data that shall be included in the retrieved data"
+          }
+        }
+      },
+      "required": [
+        "timeRange",
+        "dataFormat"
+      ]
+    }
+  }
+}
