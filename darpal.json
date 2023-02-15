@@ -6,7 +6,79 @@
   "description": "This schema defines the Data Access Request Process Automation Language",
   "required": [
     "meta",
+    "_id",
+    "createdAt",
     "requestInterface"
+  ],
+  "examples": [
+      {
+        "meta": {
+          "name": "Service Provider",
+          "version": 1,
+          "_hash": "stringstringstringstringstringstringstringstringstringstringstri"
+        },
+        "requestInterface": [
+          {
+            "manual": {
+              "available": true,
+              "address": "Straße des 17. Juni, 10587 Berlin",
+              "email": "rta@mycompany.com",
+              "phone": "+8198417789",
+              "authentication": "string"
+            },
+            "webinterface": {
+              "available": true,
+              "startUrl": "https://mycompany.com/rta",
+              "authentication": "ID",
+              "workflowContainer": {
+                "automationEngine": "automa",
+                "workflow": [
+                  {}
+                ],
+                "version": 0,
+                "verified": true
+              }
+            },
+            "api": {
+              "available": true,
+              "endpoint": "https://mycompany.com/rta/api",
+              "authentication": {
+                "authDescription": "token",
+                "authProcessStage": "requestParameter"
+              },
+              "apiParameters": [
+                {
+                  "key": "legalBasis",
+                  "value": "gdpr-15-3"
+                }
+              ]
+            }
+          }
+        ],
+        "requestParameter": {
+          "timeRange": {
+            "allTime": true,
+            "customRange": {
+              "available": true,
+              "range": [
+                "last-year"
+              ]
+            }
+          },
+          "mediaQuality": [
+            "high"
+          ],
+          "dataFormat": [
+            "HTML"
+          ],
+          "categories": [
+            "string"
+          ]
+        },
+        "createdAt": "2023-02-15T18:32:00.591Z",
+        "updatedAt": "2023-02-15T18:32:00.591Z",
+        "_id": "string"
+      }
   ],
   "additionalProperties": true,
   "properties": {
@@ -18,7 +90,7 @@
             "f1424f86-ca0f-4f0c-9438-43cc00509931"
           ]
     },
-    "created": {
+    "createdAt": {
           "type": "string",
           "title": "Created",
           "description": "Creation date of the document as an ISO-8601 time code. Set automatically",
@@ -27,7 +99,7 @@
             "2020-04-03T15:53:05.929588"
           ]
     },
-    "modified": {
+    "updatedAt": {
           "type": "string",
           "title": "Modified",
           "description": "Last modified date of the document as an ISO-8601 time code. Set automatically",
@@ -97,7 +169,12 @@
             "description": "Describes the manual request process",
             "properties": {
               "available": {
-                "type": "boolean"
+                "type": "boolean",
+                "title":"Available",
+                "description": "Is a manual request process available?",
+                "examples": [
+                  true
+                ]
               },
               "address": {
                 "type": "string",
@@ -119,6 +196,7 @@
               "phone": {
                 "type":"string",
                 "pattern": "^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$",
+                "description": "Phone number to make the request to",
                 "examples": [
                   "+49 151 1234 5678"
                 ]
@@ -143,7 +221,12 @@
             "description": "Describes the semi-automatic request process using a webinterface",
             "properties": {
               "available": {
-                "type": "boolean"
+                "type": "boolean",
+                "title":"Available",
+                "description": "Is a web-based request process available?",
+                "examples": [
+                  true
+                ]
               },
               "startUrl": {
                 "type": "string",
@@ -172,7 +255,10 @@
                 "properties": {
                   "automationEngine": {
                     "type": "string",
-                    "description": "Automation engine that is used to describe the specific workflow"
+                    "description": "Automation engine that is used to describe the specific workflow",
+                    "examples": [
+                      "automa"
+                    ]
                   },
                   "workflow": {
                     "type": "array", 
@@ -236,11 +322,17 @@
             "description": "Describes the fully automated request process using an API",
             "properties": {
               "available": {
-                "type": "boolean"
+                "type": "boolean",
+                "title":"Available",
+                "description": "Is an API-based request process available?",
+                "examples": [
+                  true
+                ]
               },
               "endpoint": {
                 "type": "string",
-                "format": "uri-reference"
+                "format": "uri-reference",
+                "description": "URL of the API-endpoint"
               },
               "authentication": {
                 "type": "object",
@@ -316,7 +408,7 @@
                   "description": "There might be multiple available time ranges.",
                   "items": {
                     "description": "The (time) range specifies the given options the DSAR should include. It follows the ISO 8601 for time spans.",
-                    "pattern": "^(\\d{4}(-\\d{2}(-\\d{2})?(?!:))?(T\\d{2}(:\\d{2}(:\\d{2})?(\\.\\d+)?)?)?(Z|([+,-]\\d{2}(:\\d{2})?))?)?P(([0-9]+([.,][0-9]*)?Y)?([0-9]+([.,][0-9]*)?M)?([0-9]+([.,][0-9]*)?D)?T?([0-9]+([.,][0-9]*)?H)?([0-9]+([.,][0-9]*)?M)?([0-9]+([.,][0-9]*)?S)?)|\\d{4}-?(0[1-9]|11|12)-?(?:[0-2]\\d|30|31)T((?:[0-1][0-9]|[2][0-3]):?(?:[0-5][0-9]):?(?:[0-5][0-9]|60)|2400|24:00)$",
+                    "pattern": "^(\\d{4}(-\\d{2}(-\\d{2})?(?!:))?(T\\d{2}(:\\d{2}(:\\d{2})?(\\.\\d+)?)?)?(Z|([+,-]\\d{2}(:\\d{2})?))?)?P(([0-9]+([.,][0-9]*)?Y)?([0-9]+([.,][0-9]*)?M)?([0-9]+([.,][0-9]*)?D)?T?([0-9]+([.,][0-9]*)?H)?([0-9]+([.,][0-9]*)?M)?([0-9]+([.,][0-9]*)?S)?)|\\d{4}-?(0[1-9]|11|12)-?(?:[0-2]\\d|30|31)T((?:[0-1][0-9]|[2][0-3]):?(?:[0-5][0-9]):?(?:[0-5][0-9]|60)|2400|24:00)$"
                   }
                 }
               },
