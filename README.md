@@ -7,6 +7,7 @@ With this proposed schema for data subject access request (DSAR) processes, we a
 The schema has three main building blocks: meta information, request interface and request parameters.
 
 ## Process Repository
+We provide a process repository with 15 provider-specific DARPAL documents [here](https://v2202301191442214869.powersrv.de/docs#/darpal/get_item_multi_darpal__get).
 
 ## Applications
-We provide a prototypical implementation of such a one-click DSARs: https://daskita.github.io/dara-frontend/
+We provide a prototypical implementation of such a one-click request processes: https://daskita.github.io/dara-frontend/

@@ -10,6 +10,32 @@
   ],
   "additionalProperties": true,
   "properties": {
+    "_id": {
+          "type": "string",
+          "title": "_id",
+          "description": "The ID follows the database-specific implementation and does not have to be set in advance; but should offer as much entropy as possible for globally unique identifiers.",
+          "examples": [
+            "f1424f86-ca0f-4f0c-9438-43cc00509931"
+          ]
+    },
+    "created": {
+          "type": "string",
+          "title": "Created",
+          "description": "Creation date of the document as an ISO-8601 time code. Set automatically",
+          "pattern": "^([\\+-]?\\d{4}(?!\\d{2}\\b))((-?)((0[1-9]|1[0-2])(\\3([12]\\d|0[1-9]|3[01]))?|W([0-4]\\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\\d|[12]\\d{2}|3([0-5]\\d|6[1-6])))([T\\s]((([01]\\d|2[0-3])((:?)[0-5]\\d)?|24\\:?00)([\\.,]\\d+(?!:))?)?(\\17[0-5]\\d([\\.,]\\d+)?)?([zZ]|([\\+-])([01]\\d|2[0-3]):?([0-5]\\d)?)?)?)?$",
+          "examples": [
+            "2020-04-03T15:53:05.929588"
+          ]
+    },
+    "modified": {
+          "type": "string",
+          "title": "Modified",
+          "description": "Last modified date of the document as an ISO-8601 time code. Set automatically",
+          "pattern": "^([\\+-]?\\d{4}(?!\\d{2}\\b))((-?)((0[1-9]|1[0-2])(\\3([12]\\d|0[1-9]|3[01]))?|W([0-4]\\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\\d|[12]\\d{2}|3([0-5]\\d|6[1-6])))([T\\s]((([01]\\d|2[0-3])((:?)[0-5]\\d)?|24\\:?00)([\\.,]\\d+(?!:))?)?(\\17[0-5]\\d([\\.,]\\d+)?)?([zZ]|([\\+-])([01]\\d|2[0-3]):?([0-5]\\d)?)?)?)?$",
+          "examples": [
+            "2022-12-08T15: 53: 05.929588"
+          ]
+    },
     "meta": {
       "$id": "#/properties/meta",
       "type": "object",
@@ -17,56 +43,25 @@
       "description": "Meta information for the identification and verification of the document.",
       "examples": [
         {
-          "_id": "f1424f86-ca0f-4f0c-9438-43cc00509931",
           "name": "Google",
-          "created": "2022-12-08T15:53:05.929588",
-          "modified": "2022-12-08T15: 53: 05.929588",
           "version": 1,
           "status": "active",
           "_hash": "d732a793562a3e5dc57645a8"
         }
       ],
       "required": [
-        "_id",
         "name",
-        "created",
         "version",
         "_hash"
       ],
       "additionalProperties": true,
       "properties": {
-        "_id": {
-          "type": "string",
-          "title": "_id",
-          "description": "The ID follows the database-specific implementation and does not have to be set in advance; but should offer as much entropy as possible for globally unique identifiers.",
-          "examples": [
-            "f1424f86-ca0f-4f0c-9438-43cc00509931"
-          ]
-        },
         "name": {
           "type": "string",
           "title": "Name",
           "description": "Name of the data controller.",
           "examples": [
             "Green Company"
-          ]
-        },
-        "created": {
-          "type": "string",
-          "title": "Created",
-          "description": "Creation date of the document as an ISO-8601 time code.",
-          "pattern": "^([\\+-]?\\d{4}(?!\\d{2}\\b))((-?)((0[1-9]|1[0-2])(\\3([12]\\d|0[1-9]|3[01]))?|W([0-4]\\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\\d|[12]\\d{2}|3([0-5]\\d|6[1-6])))([T\\s]((([01]\\d|2[0-3])((:?)[0-5]\\d)?|24\\:?00)([\\.,]\\d+(?!:))?)?(\\17[0-5]\\d([\\.,]\\d+)?)?([zZ]|([\\+-])([01]\\d|2[0-3]):?([0-5]\\d)?)?)?)?$",
-          "examples": [
-            "2020-04-03T15:53:05.929588"
-          ]
-        },
-        "modified": {
-          "type": "string",
-          "title": "Modified",
-          "description": "Last modified date of the document as an ISO-8601 time code.",
-          "pattern": "^([\\+-]?\\d{4}(?!\\d{2}\\b))((-?)((0[1-9]|1[0-2])(\\3([12]\\d|0[1-9]|3[01]))?|W([0-4]\\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\\d|[12]\\d{2}|3([0-5]\\d|6[1-6])))([T\\s]((([01]\\d|2[0-3])((:?)[0-5]\\d)?|24\\:?00)([\\.,]\\d+(?!:))?)?(\\17[0-5]\\d([\\.,]\\d+)?)?([zZ]|([\\+-])([01]\\d|2[0-3]):?([0-5]\\d)?)?)?)?$",
-          "examples": [
-            "2022-12-08T15: 53: 05.929588"
           ]
         },
         "version": {
