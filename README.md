@@ -8,7 +8,7 @@ The schema has three main building blocks: meta information, request interface a
 <img src="https://user-images.githubusercontent.com/101651878/217796250-278ea5c4-f73d-4ff7-ba91-ad35a977c64a.png" width="70%" alt="Schema elements of DARPAL" align="center" margin="20"/> 
 
 ## Process Repository
-We provide a process repository with 15 provider-specific DARPAL documents [here](https://v2202301191442214869.powersrv.de/docs#/darpal/get_item_multi_darpal__get).
+We provide a process repository with 15 provider-specific DARPAL documents [here](https://github.com/DaSKITA/darpal-documents).
 
 ## Applications
 We provide a prototypical implementation of such a one-click request processes: https://daskita.github.io/dara-frontend/
